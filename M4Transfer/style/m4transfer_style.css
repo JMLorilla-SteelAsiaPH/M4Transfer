@@ -1,0 +1,35 @@
+﻿body {
+}
+
+h2 {
+    font-family: Verdana;
+}
+
+#SiteHeader {
+    margin-top: 50px;
+}
+
+#SiteLogo {
+    width: 20%;
+}
+
+
+#SearchDiv {
+    margin-top: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+#SearchGVDiv {
+    margin-top: 20px;
+    padding-left: 100px;
+}
+
+.InsertDataBtn {
+    margin-top: 10px;
+}
+
+.LblSqlError {
+    color: red;
+}
+
