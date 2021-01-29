@@ -45,9 +45,9 @@ namespace M4Transfer
         }
 
         //Is there a better way to do/call this function without it requiring 4 parameters?
-        public void ShowData(GridView gridView, string FileNos, Label LblTxt, string selectedSite = "")
+        public void ShowPhysicalData(GridView gridView, string FileNos, Label LblTxt, string selectedSite = "")
         {
-            using (con)
+            using (con = new SqlConnection())
             {
                 con.ConnectionString = GetSiteConnectionString(selectedSite);
                 con.Open();
@@ -56,6 +56,7 @@ namespace M4Transfer
 
                 try
                 {
+                    cmd = new SqlCommand();
                     cmd.CommandText = "SELECT * FROM vw_physical_select_all WHERE FileNos = @FileNos";
                     cmd.Parameters.AddWithValue("@FileNos", FileNos);
                     cmd.Connection = con;
@@ -76,13 +77,19 @@ namespace M4Transfer
             }
         }
 
+        public void ShowMechanicalData()
+        {
+
+        }
+
         //Change this part later.
         public bool CheckIfExists(string FileNos)
         {
-            using (con)
+            using (con = new SqlConnection())
             {
                 con.ConnectionString = M4ConString;
                 con.Open();
+                cmd = new SqlCommand();
 
                 try
                 {
@@ -105,10 +112,12 @@ namespace M4Transfer
 
         public void InsertData(GridView gridView, string selectedSite)
         {
-            using (con)
+            using (con= new SqlConnection())
             {
                 con.ConnectionString = M4ConString;
                 con.Open();
+
+                cmd = new SqlCommand();
 
                 foreach (GridViewRow g1 in gridView.Rows)
                 {

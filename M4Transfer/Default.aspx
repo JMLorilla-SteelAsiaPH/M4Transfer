@@ -31,7 +31,7 @@
             <asp:GridView ID="SearchGV" CssClass="SearchGV" runat="server">
             </asp:GridView>
             <asp:Label ID="LabelSqlError" CssClass="LblSqlError" runat="server" Text=""></asp:Label><br />
-            <asp:Button ID="InsertDataBtn" CssClass="InsertDataBtn" runat="server" Text="TRANSFER ORDER" OnClick="InsertDataBtn_Click" />
+            <asp:Button ID="InsertDataBtn" CssClass="InsertDataBtn" runat="server" Text="TRANSFER TEST RESULT" OnClick="InsertDataBtn_Click" />
        </div>
     </form>
 </body>
