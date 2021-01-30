@@ -13,7 +13,6 @@ h2 {
     width: 20%;
 }
 
-
 #SearchDiv {
     margin-top: 20px;
     padding-left: 100px;
@@ -27,6 +26,11 @@ h2 {
 
 .InsertDataBtn {
     margin-top: 10px;
+}
+
+#LabelSqlErrorDiv {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .LblSqlError {

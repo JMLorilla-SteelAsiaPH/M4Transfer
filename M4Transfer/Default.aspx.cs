@@ -10,9 +10,10 @@ using System.Configuration;
 
 namespace M4Transfer
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : Page
     {
         private DBClass DBOperation = new DBClass();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!Page.IsPostBack && Session["SelectedSite"] == null)
@@ -21,10 +22,18 @@ namespace M4Transfer
             }
             else
             {
-                string SelectedSite = DropDownList1.SelectedValue.ToString().ToLower();
-                DBOperation.ShowData(SearchGV, SearchTxt.Text, LabelSqlError, SelectedSite);
-                Session.Clear();
+
             }
+
+            SetDBClassValues();
+            //DBOperation.BindMillDropDownData(DropDownList1);
+        }
+
+        protected void SetDBClassValues()
+        {
+            DBOperation.gridView1 = PhysicalGV;
+            DBOperation.gridView2 = MechanicalGV;
+            DBOperation.LblTxt = LabelSqlError;
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
@@ -33,12 +42,15 @@ namespace M4Transfer
             {
                 InsertDataBtn.Enabled = true;
             }
+
+            DBOperation.ShowPhysicalData(SearchTxt.Text, DropDownList1.SelectedValue.ToString().ToUpper());
+            DBOperation.ShowMechanicalData(SearchTxt.Text, DropDownList1.SelectedValue.ToString().ToUpper());
         }
 
         protected void InsertDataBtn_Click(object sender, EventArgs e)
         {
-            string SelectedSite = DropDownList1.SelectedValue.ToString().ToLower();
-            DBOperation.InsertData(SearchGV, SelectedSite);
+            string SelectedSite = DropDownList1.SelectedValue.ToString().ToUpper();
+            DBOperation.InsertData(PhysicalGV, SelectedSite);
             InsertDataBtn.Enabled = false;
         }
     }

@@ -20,66 +20,145 @@ namespace M4Transfer
         private DataTable dt = new DataTable();
         private DataSet ds = new DataSet();
 
-        private string M4ConString = WebConfigurationManager.ConnectionStrings["M4ConnectionString"].ConnectionString;
+        public Label LblTxt;
+        public GridView gridView1;
+        public GridView gridView2;
 
-        public string GetSiteConnectionString(string site)
-        {
-            if (site == "m1")
-            {
-                return WebConfigurationManager.ConnectionStrings["M1ConnectionString"].ConnectionString;
-            }
-            else if (site == "m3")
-            {
-                return WebConfigurationManager.ConnectionStrings["M3ConnectionString"].ConnectionString;
-            }
-            else if (site == "m5")
-            {
-                return WebConfigurationManager.ConnectionStrings["M5ConnectionString"].ConnectionString;
-            }
-            else if (site == "m6")
-            {
-                return WebConfigurationManager.ConnectionStrings["M6ConnectionString"].ConnectionString;
-            }
-
-            return M4ConString;
-        }
-
-        //Is there a better way to do/call this function without it requiring 4 parameters?
-        public void ShowPhysicalData(GridView gridView, string FileNos, Label LblTxt, string selectedSite = "")
+        public string GetMillConnectionString(string mill)
         {
             using (con = new SqlConnection())
             {
-                con.ConnectionString = GetSiteConnectionString(selectedSite);
+                string MillConnString = "";
+                con.ConnectionString = WebConfigurationManager.ConnectionStrings["TransactionLogConnString"].ToString();
                 con.Open();
-
-                ds = new DataSet();
-
                 try
                 {
-                    cmd = new SqlCommand();
-                    cmd.CommandText = "SELECT * FROM vw_physical_select_all WHERE FileNos = @FileNos";
-                    cmd.Parameters.AddWithValue("@FileNos", FileNos);
-                    cmd.Connection = con;
-                    sda = new SqlDataAdapter(cmd);
-                    sda.Fill(ds);
-                    cmd.ExecuteNonQuery();
-                    gridView.DataSource = ds;
-                    gridView.DataBind();
+                    cmd = new SqlCommand("usp_get_mill_connstring", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@MillCode", mill);
+                    var dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        MillConnString = dr["connection_string"].ToString();
+                    }
                 }
-                catch (SqlException)
+                catch (SqlException ex)
                 {
-                    LblTxt.Text = "The system has detected an error! Please contact the System Administrator or IT for support.";
+                    LblTxt.Text = $"Error: {ex.Message}";
                 }
                 finally
                 {
+                    con.Close();
+                    con.Dispose();
+                }
+
+                return MillConnString;
+            }
+        }
+
+        public void BindMillDropDownData(DropDownList millDropDownList)
+        {
+            using (con = new SqlConnection())
+            {
+                con.ConnectionString = WebConfigurationManager.ConnectionStrings["TransactionLogConnString"].ToString();
+                con.Open();
+
+                try
+                {
+                    sda = new SqlDataAdapter();
+                    dt = new DataTable();
+                    cmd = new SqlCommand("SELECT mill FROM mills", con);
+                    sda.SelectCommand = cmd;
+                    sda.Fill(dt);
+                    millDropDownList.DataSource = dt;
+                    millDropDownList.DataTextField = "mill";
+                    millDropDownList.DataValueField = "mill";
+                    millDropDownList.DataBind();
+                }
+                catch(SqlException ex)
+                {
+                    LblTxt.Text = $"Error: {ex.Message}";
+                }
+                finally
+                {
+                    con.Close();
                     con.Dispose();
                 }
             }
         }
 
-        public void ShowMechanicalData()
+        public void ShowPhysicalData(string FileNos, string selectedSite)
         {
+            //string MillConnString = GetMillConnectionString(selectedSite);
 
+            string MillConnString = "Server=ERAGON;Database=QANet;User Id=sb;Password=sb;";
+
+            using (con = new SqlConnection())
+            {
+                con.ConnectionString = MillConnString;
+                con.Open();
+
+                try
+                {
+                    cmd = new SqlCommand();
+                    //cmd.CommandText = "SELECT * FROM vw_select_physical_m4_transfer WHERE FileNos = @FileNos";
+                    cmd.CommandText = "SELECT * FROM gago WHERE FileNos = @FileNos";
+                    cmd.Parameters.AddWithValue("@FileNos", FileNos);
+                    cmd.Connection = con;
+                    sda = new SqlDataAdapter(cmd);
+                    ds = new DataSet();
+                    sda.Fill(ds);
+                    cmd.ExecuteNonQuery();
+                    gridView1.DataSource = ds;
+                    gridView1.DataBind();
+                }
+                catch (SqlException ex)
+                {
+                    LblTxt.Text = $"Error: {ex.Message}";
+                }
+                finally
+                {
+                    con.Close();
+                    con.Dispose();
+                }
+            }
+        }
+
+        public void ShowMechanicalData(string FileNos, string selectedSite)
+        {
+            //string MillConnString = GetMillConnectionString(selectedSite);
+
+            string MillConnString = "Server=ERAGON;Database=QANet;User Id=sb;Password=sb;";
+
+            using (con = new SqlConnection())
+            {
+                con.ConnectionString = MillConnString;
+                con.Open();
+
+                try
+                {
+                    cmd = new SqlCommand();
+                    cmd.CommandText = "SELECT * FROM vw_select_mechanical_m4_transfer WHERE FileNos = @FileNos";
+                    cmd.Parameters.AddWithValue("@FileNos", FileNos);
+                    cmd.Connection = con;
+                    sda = new SqlDataAdapter(cmd);
+                    ds = new DataSet();
+                    sda.Fill(ds);
+                    cmd.ExecuteNonQuery();
+                    gridView2.DataSource = ds;
+                    gridView2.DataBind();
+                }
+                catch (SqlException ex)
+                {
+                    LblTxt.Text = $"Error: {ex.Message}";
+                }
+                finally
+                {
+                    con.Close();
+                    con.Dispose();
+                }
+            }
         }
 
         //Change this part later.
@@ -87,7 +166,7 @@ namespace M4Transfer
         {
             using (con = new SqlConnection())
             {
-                con.ConnectionString = M4ConString;
+                //con.ConnectionString = M4ConString;
                 con.Open();
                 cmd = new SqlCommand();
 
@@ -97,12 +176,13 @@ namespace M4Transfer
                     cmd.Connection = con;
                     cmd.ExecuteNonQuery();
                 }
-                catch(SqlException)
+                catch(SqlException ex)
                 {
-
+                    LblTxt.Text = $"Error: {ex.Message}";
                 }
                 finally
                 {
+                    con.Close();
                     con.Dispose();
                 }
             }
@@ -110,11 +190,12 @@ namespace M4Transfer
             return true;
         }
 
+        //Change this part later.
         public void InsertData(GridView gridView, string selectedSite)
         {
-            using (con= new SqlConnection())
+            using (con = new SqlConnection())
             {
-                con.ConnectionString = M4ConString;
+                //con.ConnectionString;
                 con.Open();
 
                 cmd = new SqlCommand();
@@ -127,9 +208,9 @@ namespace M4Transfer
                     cmd.ExecuteNonQuery();
                 }
 
+                con.Close();
                 con.Dispose();
             }
-                
         }
     }
 }
