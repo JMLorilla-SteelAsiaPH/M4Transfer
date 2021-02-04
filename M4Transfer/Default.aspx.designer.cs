@@ -15,15 +15,6 @@ namespace M4Transfer
     {
 
         /// <summary>
-        /// form1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
-        /// <summary>
         /// SearchLabel control.
         /// </summary>
         /// <remarks>
@@ -69,13 +60,13 @@ namespace M4Transfer
         protected global::System.Web.UI.WebControls.GridView PhysicalGV;
 
         /// <summary>
-        /// MechanicalGV control.
+        /// ChemicalGV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView MechanicalGV;
+        protected global::System.Web.UI.WebControls.GridView ChemicalGV;
 
         /// <summary>
         /// LabelSqlError control.

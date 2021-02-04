@@ -4,54 +4,46 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
+using M4Transfer.Class;
 
 namespace M4Transfer
 {
-    public partial class Default : Page
+    public partial class Default : System.Web.UI.Page
     {
-        private DBClass DBOperation = new DBClass();
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack && Session["SelectedSite"] == null)
+            if (!IsPostBack)
             {
-                InsertDataBtn.Enabled = false;
+                SetPage();
             }
-            else
-            {
-
-            }
-
-            SetDBClassValues();
-            //DBOperation.BindMillDropDownData(DropDownList1);
         }
 
-        protected void SetDBClassValues()
+        protected void SetPage()
         {
-            DBOperation.gridView1 = PhysicalGV;
-            DBOperation.gridView2 = MechanicalGV;
-            DBOperation.LblTxt = LabelSqlError;
+            BindMillDropDown bindDDL = new BindMillDropDown(DropDownList1, LabelSqlError);
+
+            InsertDataBtn.Enabled = false;
+            bindDDL.BindMillDropDownData();
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            if (DropDownList1.SelectedItem.Value.ToLower() != "m4")
+            ShowData PopulateGridView = new ShowData(LabelSqlError, PhysicalGV, ChemicalGV);
+
+            string selectedDdlValue = DropDownList1.SelectedValue.ToString();
+
+            PopulateGridView.ShowPhysicalData(SearchTxt.Text, selectedDdlValue);
+            PopulateGridView.ShowChemicalData(SearchTxt.Text, selectedDdlValue);
+
+            if(!PopulateGridView.CheckIfDataExists(SearchTxt.Text, "M1"))
             {
                 InsertDataBtn.Enabled = true;
             }
-
-            DBOperation.ShowPhysicalData(SearchTxt.Text, DropDownList1.SelectedValue.ToString().ToUpper());
-            DBOperation.ShowMechanicalData(SearchTxt.Text, DropDownList1.SelectedValue.ToString().ToUpper());
         }
 
         protected void InsertDataBtn_Click(object sender, EventArgs e)
         {
-            string SelectedSite = DropDownList1.SelectedValue.ToString().ToUpper();
-            DBOperation.InsertData(PhysicalGV, SelectedSite);
-            InsertDataBtn.Enabled = false;
+
         }
     }
 }

@@ -7,6 +7,7 @@ h2 {
 
 #SiteHeader {
     margin-top: 50px;
+    margin-left: 100px;
 }
 
 #SiteLogo {
@@ -20,6 +21,12 @@ h2 {
 }
 
 #SearchGVDiv {
+    margin-top: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+#LoginContentArea {
     margin-top: 20px;
     padding-left: 100px;
 }
@@ -36,4 +43,6 @@ h2 {
 .LblSqlError {
     color: red;
 }
+
+
 
