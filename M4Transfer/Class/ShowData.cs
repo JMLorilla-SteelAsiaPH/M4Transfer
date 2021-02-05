@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 using System.Web.Configuration;
+using M4Transfer.Class;
 
 namespace M4Transfer
 {
@@ -25,43 +26,10 @@ namespace M4Transfer
             gridView2 = aGridView2;
         }
 
-        public string GetMillConnectionString(string mill)
-        {
-            using (con = new SqlConnection())
-            {
-                string millConnString = "";
-                con.ConnectionString = WebConfigurationManager.ConnectionStrings["TransactionLogConnString"].ToString();
-                con.Open();
-
-                try
-                {
-                    cmd = new SqlCommand("usp_get_mill_connstring", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@MillCode", mill);
-                    var dr = cmd.ExecuteReader();
-
-                    while (dr.Read())
-                    {
-                        millConnString = dr["ConnString"].ToString();
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    LblTxt.Text = $"Error: {ex.Message}";
-                }
-                finally
-                {
-                    con.Close();
-                    con.Dispose();
-                }
-
-                return millConnString;
-            }
-        }
-
         public void ShowPhysicalData(string FileNos, string selectedSite)
         {
-            string millConnString = GetMillConnectionString(selectedSite);
+            GetConnectionStrings getConnString = new GetConnectionStrings(LblTxt, selectedSite);
+            string millConnString = getConnString.GetMillConnectionString();
 
             using (con = new SqlConnection())
             {
@@ -95,7 +63,8 @@ namespace M4Transfer
 
         public void ShowChemicalData(string FileNos, string selectedSite)
         {
-            string millConnString = GetMillConnectionString(selectedSite);
+            GetConnectionStrings getConnString = new GetConnectionStrings(LblTxt, selectedSite);
+            string millConnString = getConnString.GetMillConnectionString();
 
             using (con = new SqlConnection())
             {
@@ -129,9 +98,10 @@ namespace M4Transfer
 
         public bool CheckIfDataExists(string FileNos, string selectedSite)
         {
-            int x = 0;
+            GetConnectionStrings getConnString = new GetConnectionStrings(LblTxt, selectedSite);
+            string millConnString = getConnString.GetMillConnectionString();
 
-            string millConnString = GetMillConnectionString(selectedSite);
+            int x = 0;
 
             using (con = new SqlConnection())
             {

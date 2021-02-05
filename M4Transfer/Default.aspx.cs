@@ -24,6 +24,7 @@ namespace M4Transfer
 
             InsertDataBtn.Enabled = false;
             bindDDL.BindMillDropDownData();
+            LblUser.Text = Session["QCStaffUser"].ToString();
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)

@@ -5,12 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>QA Test Result Data Transfer</title>
-    <link rel="stylesheet" type="text/css" href="style/m4transfer_style.css" />
+    <link rel="stylesheet" type="text/css" href="~/style/m4transfer_style.css" />
 </head>
 <body>
     <div id="SiteHeader">
         <img src="assets/sa_logo.png" id="SiteLogo" />
-        <h2>M4 Site Order Transfer</h2>
+        <h2>QA Test Result Data Transfer</h2>
     </div>
 
     <form id="form1" runat="server">

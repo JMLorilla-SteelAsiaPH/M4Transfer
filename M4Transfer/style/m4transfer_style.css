@@ -17,18 +17,16 @@ h2 {
 #SearchDiv {
     margin-top: 20px;
     padding-left: 100px;
-    padding-right: 100px;
 }
 
 #SearchGVDiv {
     margin-top: 20px;
     padding-left: 100px;
-    padding-right: 100px;
 }
 
-#LoginContentArea {
+.LoginForm {
     margin-top: 20px;
-    padding-left: 100px;
+    margin-left: 100px;
 }
 
 .InsertDataBtn {

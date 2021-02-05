@@ -57,10 +57,6 @@ C:\Users\Ella\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csproj.Cop
 C:\Users\Ella\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.dll
 C:\Users\Ella\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.pdb
 C:\Users\Ella\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csprojAssemblyReference.cache
-D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csprojAssemblyReference.cache
-D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csproj.CoreCompileInputs.cache
-D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.dll
-D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.pdb
 D:\source\repos\M4Transfer\M4Transfer\bin\M4Transfer.dll.config
 D:\source\repos\M4Transfer\M4Transfer\bin\M4Transfer.dll
 D:\source\repos\M4Transfer\M4Transfer\bin\M4Transfer.pdb
@@ -115,4 +111,8 @@ D:\source\repos\M4Transfer\M4Transfer\bin\roslyn\VBCSCompiler.exe
 D:\source\repos\M4Transfer\M4Transfer\bin\roslyn\VBCSCompiler.exe.config
 D:\source\repos\M4Transfer\M4Transfer\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\source\repos\M4Transfer\M4Transfer\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csproj.CoreCompileInputs.cache
 D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csproj.CopyComplete
+D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.dll
+D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.pdb
+D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csprojAssemblyReference.cache

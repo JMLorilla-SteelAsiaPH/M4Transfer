@@ -11,44 +11,44 @@ namespace M4Transfer
 {
 
 
-    public partial class Default
+    public partial class Login
     {
 
         /// <summary>
-        /// LblUser control.
+        /// LblUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblUser;
+        protected global::System.Web.UI.WebControls.Label LblUsername;
 
         /// <summary>
-        /// btnLogout control.
+        /// TxtUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogout;
+        protected global::System.Web.UI.WebControls.TextBox TxtUsername;
 
         /// <summary>
-        /// SearchLabel control.
+        /// LblPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label SearchLabel;
+        protected global::System.Web.UI.WebControls.Label LblPassword;
 
         /// <summary>
-        /// SearchTxt control.
+        /// TxtPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SearchTxt;
+        protected global::System.Web.UI.WebControls.TextBox TxtPassword;
 
         /// <summary>
         /// DropDownList1 control.
@@ -60,48 +60,21 @@ namespace M4Transfer
         protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
 
         /// <summary>
-        /// SearchButton control.
+        /// BtnLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SearchButton;
+        protected global::System.Web.UI.WebControls.Button BtnLogin;
 
         /// <summary>
-        /// PhysicalGV control.
+        /// LblSqlError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView PhysicalGV;
-
-        /// <summary>
-        /// ChemicalGV control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView ChemicalGV;
-
-        /// <summary>
-        /// LabelSqlError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelSqlError;
-
-        /// <summary>
-        /// InsertDataBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertDataBtn;
+        protected global::System.Web.UI.WebControls.Label LblSqlError;
     }
 }

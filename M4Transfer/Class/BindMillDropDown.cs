@@ -18,7 +18,6 @@ namespace M4Transfer.Class
         private SqlCommand cmd = new SqlCommand();
         private SqlDataAdapter sda = new SqlDataAdapter();
         private DataTable dt = new DataTable();
-        private DataSet ds = new DataSet();
 
         public BindMillDropDown(DropDownList aMillDDL, Label aLabel)
         {
