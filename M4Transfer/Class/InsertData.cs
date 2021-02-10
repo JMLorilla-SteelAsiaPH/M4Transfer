@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.Configuration;
 using System.Configuration;
 using System.Globalization;
+using M4Transfer.Class;
 
 namespace M4Transfer.Class
 {
@@ -31,9 +32,12 @@ namespace M4Transfer.Class
         //Change this part later.
         public bool CheckIfExists(string FileNos)
         {
+            GetConnectionStrings getConnString = new GetConnectionStrings(formLabel, selectedSite);
+            string millConnString = getConnString.GetMillConnectionString();
+
             using (con = new SqlConnection())
             {
-                //con.ConnectionString = M4ConString;
+                con.ConnectionString = millConnString;
                 con.Open();
                 cmd = new SqlCommand();
 

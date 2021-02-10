@@ -12,19 +12,52 @@ namespace M4Transfer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            SetPage();
+            if (!IsPostBack)
+            {
+                SetPage();
+                ClearPageForm();
+            }
+
+            if(Session["QCStaffUsername"] != null)
+            {
+                Response.Redirect("~/Default.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
         }
 
         protected void SetPage()
         {
             BindMillDropDown bindDDL = new BindMillDropDown(DropDownList1, LblSqlError);
             bindDDL.BindMillDropDownData();
+
+            InvalidUserCred.Visible = false;
+        }
+
+        protected void ClearPageForm()
+        {
+            TxtUsername.Text = "";
+            TxtPassword.Text = "";
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
         {
-            Session["QCStaffUser"] = TxtUsername.Text;
-            Response.Redirect("~/Default.aspx");
+            LoginClass authenticateUser = new LoginClass(LblSqlError, DropDownList1.Text);
+            bool UserAuthenticated = authenticateUser.AuthenticateUser(TxtUsername.Text, TxtPassword.Text);
+
+            if (UserAuthenticated)
+            {
+                Session["QCStaffUsername"] = TxtUsername.Text;
+                Session["MillCode"] = DropDownList1.Text;
+                ClearPageForm();
+                Response.Redirect("~/Default.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
+            else
+            {
+                ClearPageForm();
+                InvalidUserCred.Visible = true;
+            }
+
         }
     }
 }

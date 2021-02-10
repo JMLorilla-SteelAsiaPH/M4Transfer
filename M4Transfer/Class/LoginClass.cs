@@ -19,33 +19,44 @@ namespace M4Transfer.Class
             lblTxt = aLabel;
             selectedMill = aSelectedMill;
         }
-       
-        //public void AuthenticateUser()
-        //{
-        //    GetConnectionStrings getConnString = new GetConnectionStrings(lblTxt, selectedMill);
-        //    string millConnString = getConnString.GetMillConnectionString();
 
-        //    using (con = new SqlConnection())
-        //    {
-        //        con.ConnectionString = millConnString;
-        //        con.Open();
+        public bool AuthenticateUser(string user, string password)
+        {
+            GetConnectionStrings getConnString = new GetConnectionStrings(lblTxt, selectedMill);
+            string millConnString = getConnString.GetMillConnectionString();
 
-        //        try
-        //        {
-        //            cmd.Connection = con;
-        //            cmd.CommandText = "SELECT COUNT(QCStaffName) WHERE QCStaffName = @Username AND QCStaffPassword = @Password";
-        //            cmd.Parameters.AddWithValue("@Username", );
-        //        }
-        //        catch(SqlException ex)
-        //        {
-        //            lblTxt.Text = ex.Message;
-        //        }
-        //        finally
-        //        {
-        //            con.Close();
-        //            con.Dispose();
-        //        }
-        //    }
-        //}
+            int x = 0;
+
+            using (con = new SqlConnection())
+            {
+                con.ConnectionString = millConnString;
+                con.Open();
+
+                try
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "SELECT COUNT(QCStaffName) FROM UserAccess WHERE QCStaffName = @Username AND QCStaffPassword = @Password";
+                    cmd.Parameters.AddWithValue("@Username", user);
+                    cmd.Parameters.AddWithValue("@Password", password);
+                    x = (int)cmd.ExecuteScalar();
+                }
+                catch (SqlException ex)
+                {
+                    lblTxt.Text = $"Error: {ex.Message}";
+                }
+                finally
+                {
+                    con.Close();
+                    con.Dispose();
+                }
+            }
+
+            if(x > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

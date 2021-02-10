@@ -39,7 +39,7 @@ namespace M4Transfer
                 try
                 {
                     cmd = new SqlCommand();
-                    cmd.CommandText = "SELECT * FROM vw_select_physical_m4_transfer WHERE FileNos = @FileNos";
+                    cmd.CommandText = "SELECT * FROM Physical WHERE FileNos = @FileNos";
                     cmd.Parameters.AddWithValue("@FileNos", FileNos);
                     cmd.Connection = con;
                     sda = new SqlDataAdapter(cmd);
@@ -74,14 +74,14 @@ namespace M4Transfer
                 try
                 {
                     cmd = new SqlCommand();
-                    cmd.CommandText = "SELECT * FROM vw_select_mechanical_m4_transfer WHERE FileNos = @FileNos";
+                    cmd.CommandText = "SELECT * FROM mechanical WHERE FileNos = @FileNos";
                     cmd.Parameters.AddWithValue("@FileNos", FileNos);
                     cmd.Connection = con;
-                    sda = new SqlDataAdapter(cmd);
-                    ds = new DataSet();
-                    sda.Fill(ds);
+                    SqlDataAdapter sda2 = new SqlDataAdapter(cmd);
+                    DataSet ds2 = new DataSet();
+                    sda2.Fill(ds2);
                     cmd.ExecuteNonQuery();
-                    gridView2.DataSource = ds;
+                    gridView2.DataSource = ds2;
                     gridView2.DataBind();
                 }
                 catch (SqlException ex)

@@ -12,7 +12,21 @@ namespace M4Transfer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+
+            if (Session["QCStaffUsername"] == null)
+            {
+                Response.Redirect("~/Login.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+            }
+
+            if (!IsPostBack && Session["QCStaffUsername"] != null)
+            {
+                LoadDropDownSelections();
+                SetPage();
+            }
+            else
             {
                 SetPage();
             }
@@ -20,11 +34,14 @@ namespace M4Transfer
 
         protected void SetPage()
         {
-            BindMillDropDown bindDDL = new BindMillDropDown(DropDownList1, LabelSqlError);
-
             InsertDataBtn.Enabled = false;
+            LblUser.Text = Session["QCStaffUsername"].ToString();
+        }
+
+        protected void LoadDropDownSelections()
+        {
+            BindMillDropDown bindDDL = new BindMillDropDown(DropDownList1, LabelSqlError);
             bindDDL.BindMillDropDownData();
-            LblUser.Text = Session["QCStaffUser"].ToString();
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
@@ -36,7 +53,7 @@ namespace M4Transfer
             PopulateGridView.ShowPhysicalData(SearchTxt.Text, selectedDdlValue);
             PopulateGridView.ShowChemicalData(SearchTxt.Text, selectedDdlValue);
 
-            if(!PopulateGridView.CheckIfDataExists(SearchTxt.Text, "M1"))
+            if(!PopulateGridView.CheckIfDataExists(SearchTxt.Text, Session["MillCode"].ToString()))
             {
                 InsertDataBtn.Enabled = true;
             }
@@ -45,6 +62,14 @@ namespace M4Transfer
         protected void InsertDataBtn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("~/Login.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
         }
     }
 }
