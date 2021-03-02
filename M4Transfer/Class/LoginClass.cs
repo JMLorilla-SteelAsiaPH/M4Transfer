@@ -34,6 +34,7 @@ namespace M4Transfer.Class
 
                 try
                 {
+                    cmd = new SqlCommand();
                     cmd.Connection = con;
                     cmd.CommandText = "SELECT COUNT(QCStaffName) FROM UserAccess WHERE QCStaffName = @Username AND QCStaffPassword = @Password";
                     cmd.Parameters.AddWithValue("@Username", user);

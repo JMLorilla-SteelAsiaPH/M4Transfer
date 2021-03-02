@@ -95,44 +95,5 @@ namespace M4Transfer
                 }
             }
         }
-
-        public bool CheckIfDataExists(string FileNos, string selectedSite)
-        {
-            GetConnectionStrings getConnString = new GetConnectionStrings(LblTxt, selectedSite);
-            string millConnString = getConnString.GetMillConnectionString();
-
-            int x = 0;
-
-            using (con = new SqlConnection())
-            {
-                con.ConnectionString = millConnString;
-                con.Open();
-
-                try
-                {
-                    cmd = new SqlCommand();
-                    cmd.Connection = con;
-                    cmd.CommandText = "SELECT COUNT(FileNos) FROM Physical WHERE FileNos = @FileNos";
-                    cmd.Parameters.AddWithValue("@FileNos", FileNos);
-                    x = (int)cmd.ExecuteScalar();
-                }
-                catch(SqlException ex)
-                {
-                    LblTxt.Text = ex.Message;
-                }
-                finally
-                {
-                    con.Close();
-                    con.Dispose();
-                }
-            }
-
-            if(x > 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }

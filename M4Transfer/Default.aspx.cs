@@ -19,6 +19,7 @@ namespace M4Transfer
             {
                 Response.Redirect("~/Login.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
+                return;
             }
 
             if (!IsPostBack && Session["QCStaffUsername"] != null)
@@ -26,15 +27,10 @@ namespace M4Transfer
                 LoadDropDownSelections();
                 SetPage();
             }
-            else
-            {
-                SetPage();
-            }
         }
 
         protected void SetPage()
         {
-            InsertDataBtn.Enabled = false;
             LblUser.Text = Session["QCStaffUsername"].ToString();
         }
 
@@ -46,22 +42,16 @@ namespace M4Transfer
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
+            CheckData dataCheck = new CheckData();
+
             ShowData PopulateGridView = new ShowData(LabelSqlError, PhysicalGV, ChemicalGV);
-
+            
+            string userMillCode = Session["MillCode"].ToString();
             string selectedDdlValue = DropDownList1.SelectedValue.ToString();
+            string searchFileNum = SearchTxt.Text.Trim();
 
-            PopulateGridView.ShowPhysicalData(SearchTxt.Text, selectedDdlValue);
-            PopulateGridView.ShowChemicalData(SearchTxt.Text, selectedDdlValue);
-
-            if(!PopulateGridView.CheckIfDataExists(SearchTxt.Text, Session["MillCode"].ToString()))
-            {
-                InsertDataBtn.Enabled = true;
-            }
-        }
-
-        protected void InsertDataBtn_Click(object sender, EventArgs e)
-        {
-
+            PopulateGridView.ShowPhysicalData(searchFileNum, selectedDdlValue);
+            PopulateGridView.ShowChemicalData(searchFileNum, selectedDdlValue);
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)
@@ -70,6 +60,25 @@ namespace M4Transfer
             Session.Abandon();
             Response.Redirect("~/Login.aspx", false);
             Context.ApplicationInstance.CompleteRequest();
+            return;
         }
+
+        //protected void TransferPhysical_Click(object sender, EventArgs e)
+        //{
+        //    InsertData insertToDb = new InsertData(LabelSqlError, Session["MillCode"].ToString());
+
+        //    string FileNum = SearchTxt.Text.Trim();
+
+        //    insertToDb.TransferPhyiscalTestResult(FileNum);
+        //}
+
+        //protected void TransferChemical_Click(object sender, EventArgs e)
+        //{
+        //    InsertData insertToDb = new InsertData(LabelSqlError, Session["MillCode"].ToString());
+
+        //    string FileNum = SearchTxt.Text.Trim();
+
+        //    insertToDb.TransferMechanicalTestResult(FileNum);
+        //}
     }
 }

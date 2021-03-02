@@ -19,32 +19,32 @@ namespace M4Transfer.Class
         private SqlCommand cmd = new SqlCommand();
 
         private Label formLabel;
-        private GridView gridView;
+        //private GridView gridView;
         private string selectedSite;
 
-        public InsertData(Label aLabel, GridView aGridView, string aSelectedSite)
+        public InsertData(Label aLabel, string aSelectedSite)
         {
             formLabel = aLabel;
-            gridView = aGridView;
+            //gridView = aGridView;
             selectedSite = aSelectedSite;
         }
 
-        //Change this part later.
-        public bool CheckIfExists(string FileNos)
+        public void TransferPhyiscalTestResult(string FileNos)
         {
             GetConnectionStrings getConnString = new GetConnectionStrings(formLabel, selectedSite);
             string millConnString = getConnString.GetMillConnectionString();
 
-            using (con = new SqlConnection())
+            using (con = new SqlConnection(millConnString))
             {
-                con.ConnectionString = millConnString;
-                con.Open();
-                cmd = new SqlCommand();
-
                 try
                 {
-                    cmd.CommandText = "usp";
+                    cmd = new SqlCommand("usp_m3_qa_result_transfer");
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FileNum", FileNos);
+                    cmd.Parameters.AddWithValue("@CheckMode", 0);
                     cmd.Connection = con;
+                    cmd.CommandTimeout = 200;
+                    con.Open();
                     cmd.ExecuteNonQuery();
                 }
                 catch (SqlException ex)
@@ -57,30 +57,35 @@ namespace M4Transfer.Class
                     con.Dispose();
                 }
             }
-
-            return true;
         }
-
         //Change this part later.
-        public void TransferTestResult()
+        public void TransferMechanicalTestResult(string FileNos)
         {
-            using (con = new SqlConnection())
+            GetConnectionStrings getConnString = new GetConnectionStrings(formLabel, selectedSite);
+            string millConnString = getConnString.GetMillConnectionString();
+
+            using (con = new SqlConnection(millConnString))
             {
-                //con.ConnectionString;
-                con.Open();
-
-                cmd = new SqlCommand();
-
-                foreach (GridViewRow g1 in gridView.Rows)
+                try
                 {
-                    cmd.CommandText = "usp";
-                    cmd.Parameters.AddWithValue("@FileNum", g1.Cells[0].Text);
+                    cmd = new SqlCommand("usp_m3_qa_result_transfer");
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FileNum", FileNos);
+                    cmd.Parameters.AddWithValue("@CheckMode", 1);
                     cmd.Connection = con;
+                    cmd.CommandTimeout = 200;
+                    con.Open();
                     cmd.ExecuteNonQuery();
                 }
-
-                con.Close();
-                con.Dispose();
+                catch (SqlException ex)
+                {
+                    formLabel.Text = $"Error: {ex.Message}";
+                }
+                finally
+                {
+                    con.Close();
+                    con.Dispose();
+                }
             }
         }
     }

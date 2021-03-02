@@ -96,12 +96,12 @@ namespace M4Transfer
         protected global::System.Web.UI.WebControls.Label LabelSqlError;
 
         /// <summary>
-        /// InsertDataBtn control.
+        /// QueryResultLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertDataBtn;
+        protected global::System.Web.UI.WebControls.Label QueryResultLbl;
     }
 }

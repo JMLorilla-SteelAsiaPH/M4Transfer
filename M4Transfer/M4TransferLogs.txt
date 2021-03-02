@@ -1,0 +1,6 @@
+2021-03-02 21:33:37.0715|DEBUG|M4Transfer.WebService1|Dev Error: Could not find stored procedure 'usp_get_mill_connstrig'.
+2021-03-02 22:19:14.1991|DEBUG|M4Transfer.WebService1|Dev Error: Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2021-03-02 23:15:47.2231|DEBUG|M4Transfer.WebService1|Dev Error: Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2021-03-02 23:20:40.0639|DEBUG|M4Transfer.WebService1|Dev Error: Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2021-03-02 23:23:24.0025|DEBUG|M4Transfer.WebService1|Dev Error: Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+2021-03-02 23:26:43.1164|DEBUG|M4Transfer.WebService1|Dev Error: Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.

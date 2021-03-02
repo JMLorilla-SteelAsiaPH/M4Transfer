@@ -22,6 +22,11 @@ namespace M4Transfer
             {
                 Response.Redirect("~/Default.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+            else
+            {
+                SetPage();
             }
         }
 
@@ -42,7 +47,7 @@ namespace M4Transfer
         protected void BtnLogin_Click(object sender, EventArgs e)
         {
             LoginClass authenticateUser = new LoginClass(LblSqlError, DropDownList1.Text);
-            bool UserAuthenticated = authenticateUser.AuthenticateUser(TxtUsername.Text, TxtPassword.Text);
+            bool UserAuthenticated = authenticateUser.AuthenticateUser(TxtUsername.Text, TxtPassword.Text); 
 
             if (UserAuthenticated)
             {
@@ -51,6 +56,7 @@ namespace M4Transfer
                 ClearPageForm();
                 Response.Redirect("~/Default.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
+                return;
             }
             else
             {

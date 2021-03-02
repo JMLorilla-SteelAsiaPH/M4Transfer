@@ -116,3 +116,6 @@ D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csproj.CopyComplete
 D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.dll
 D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.pdb
 D:\source\repos\M4Transfer\M4Transfer\obj\Debug\M4Transfer.csprojAssemblyReference.cache
+D:\source\repos\M4Transfer\M4Transfer\bin\NLog.config
+D:\source\repos\M4Transfer\M4Transfer\bin\NLog.dll
+D:\source\repos\M4Transfer\M4Transfer\bin\NLog.xml

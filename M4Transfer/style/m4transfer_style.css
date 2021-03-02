@@ -14,19 +14,13 @@ h2 {
     width: 20%;
 }
 
-#SearchDiv {
-    margin-top: 20px;
-    padding-left: 100px;
-}
-
-#SearchGVDiv {
-    margin-top: 20px;
-    padding-left: 100px;
-}
-
 .LoginForm {
     margin-top: 20px;
-    margin-left: 100px;
+    width: 30%;
+    border-style: solid;
+    padding-top: 30px;
+    padding-left: 10px;
+    padding-bottom: 30px;
 }
 
 .InsertDataBtn {
@@ -42,14 +36,5 @@ h2 {
 .LblSqlError {
     color: red;
 }
-
-.site-divider {
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-    background-image: linear-gradient(#0eb2ed, white);
-}
-
 
 
