@@ -1,38 +1,170 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="M4Transfer.Default" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>M4 Site Transfer Order</title>
-    <link rel="stylesheet" type="text/css" href="style/m4transfer_style.css" />
-</head>
-<body>
-    <div id="SiteHeader">
-        <img src="assets/sa_logo.png" id="SiteLogo" />
-        <h2>M4 Site Order Transfer</h2>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="M4Transfer.Default" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
+    <div id="loading" style="  height: 10em; display: flex; align-items: center; justify-content: center">
+        <img src="assets/loading_gif.gif" />
+        <span>Transferring Data<br />Please wait...<br />This might take a while depending on the network traffic to and from source database.</span>
     </div>
 
-    <form id="form1" runat="server">
         <div id="SearchDiv">
+            <p>Current User: <i><asp:Label ID="LblUser" runat="server" Text=""></asp:Label></i>&nbsp;(<asp:LinkButton ID="lbLogout" runat="server" OnClick="LinkButton1_Click">Logout</asp:LinkButton>)</p>
             <asp:Label ID="SearchLabel" runat="server" Text="Search: " Font-Bold="True"></asp:Label>
-            <asp:TextBox ID="SearchTxt" runat="server"></asp:TextBox>
+            <asp:TextBox ID="SearchTxt" ClientIDMode="Static" runat="server"></asp:TextBox>
             <asp:DropDownList ID="DropDownList1" runat="server">
-                <asp:ListItem Text="M1" Value="M1"></asp:ListItem>
-                <asp:ListItem Text="M2" Value="M2"></asp:ListItem>
-                <asp:ListItem Text="M3" Value="M3"></asp:ListItem>
-                <asp:ListItem Text="M4" Value="M4"></asp:ListItem>
-                <asp:ListItem Text="M5" Value="M5"></asp:ListItem>
-                <asp:ListItem Text="M6" Value="M6"></asp:ListItem>
             </asp:DropDownList>
-            <asp:Button ID="SearchButton" runat="server" Text="Search" OnClick="SearchButton_Click" />
+            <asp:Button ID="SearchButton" ClientIDMode="Static" runat="server" Text="Search" OnClick="SearchButton_Click" />
         </div>
-        <div id="SearchGVDiv">
-            <asp:GridView ID="SearchGV" CssClass="SearchGV" runat="server">
+
+        <div id="PhysicalGVDiv">
+            <asp:GridView ID="PhysicalGV" CssClass="PhysicalGV" ClientIDMode="Static" runat="server">
             </asp:GridView>
-            <asp:Label ID="LabelSqlError" CssClass="LblSqlError" runat="server" Text=""></asp:Label><br />
-            <asp:Button ID="InsertDataBtn" CssClass="InsertDataBtn" runat="server" Text="TRANSFER TEST RESULT" OnClick="InsertDataBtn_Click" />
+            <input id="TransferPhysicalBtn" type="button" value="TRANSFER PHYSICAL" />
        </div>
-    </form>
-</body>
-</html>
+
+        <div id="ChemicalGVDiv" style="margin-top: 20px;">
+            <asp:GridView ID="ChemicalGV" ClientIDMode="Static" CssClass="ChemicalGV" runat="server">
+            </asp:GridView>
+            <input id="TransferChemicalBtn" type="button" value="TRANSFER CHEMICAL" />
+        </div>
+
+            <asp:Label ID="LabelSqlError" CssClass="LblSqlError" runat="server" Text=""></asp:Label><br />
+            <asp:Label ID="QueryResultLbl" runat="server" Text=""></asp:Label>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ScriptPlaceHolder" runat="server">
+    <script>
+        $(document).ready(function () {
+            let searchTxt = $(`input[id$='SearchTxt']`).val().trim();
+
+            $("#loading").hide();
+
+            $('#TransferPhysicalBtn').prop('disabled', true);
+            $('#TransferChemicalBtn').prop('disabled', true);
+
+ 
+            if (searchTxt !== '') {
+                checkPhysicalData();
+                checkChemicalData();
+            }
+
+            $('#TransferPhysicalBtn').click(function () {
+
+            });
+
+            $('#TransferChemicalBtn').click(function () {
+                insertChemical();
+            });
+
+            $(document).ajaxStart(function () {
+                $("#loading").show();
+                $('#TransferPhysicalBtn').prop('disabled', true);
+                $('#TransferChemicalBtn').prop('disabled', true);
+            }).ajaxStop(function () {
+                $("#loading").hide();
+            });
+
+            function insertPhysical() {
+                let searchTxtVal = $(`#SearchTxt`).val().trim();
+                let userMillCode = localStorage.getItem('userLocation');
+
+                $.ajax({
+                    type: "POST",
+                    url: 'WebService1.asmx/CheckIfDataExists',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({ FileNos: searchTxtVal, selectedSite: userMillCode, checkMode: 0 }),
+                    success: function (data) {
+                        if (data.d === 'success') {
+                            alert('TEST RESULT DATA TRANSFERRED');
+                            $('#TransferPhysicalBtn').prop('disabled', true);
+                        }
+                        else {
+                            console.log(data.d);
+                        }
+                    },
+                    error: function (data, success, error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            function insertChemical() {
+                let searchTxtVal = $(`#SearchTxt`).val().trim();
+                let userMillCode = localStorage.getItem('userLocation');
+
+                $.ajax({
+                    type: "POST",
+                    url: 'WebService1.asmx/InsertChemical',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({ FileNos: searchTxtVal, selectedSite: userMillCode, checkMode: 1 }),
+                    success: function (data) {
+                        if (data.d === 'success') {
+                            alert('TEST RESULT DATA TRANSFERRED');
+                            $('#TransferChemicalBtn').prop('disabled', true);
+                        }
+                        else {
+                            console.log(data.d);
+                            $('#TransferChemicalBtn').prop('disabled', true);
+                        }
+                    },
+                    error: function (data, success, error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            function checkPhysicalData() {
+                let searchTxtVal = $(`#SearchTxt`).val().trim();
+                let userMillCode = localStorage.getItem('userLocation');
+
+                $.ajax({
+                    type: "POST",
+                    url: 'WebService1.asmx/CheckIfDataExists',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({ FileNos: searchTxtVal, selectedSite: userMillCode, CheckMode: 0 }),
+                    success: function (data) {
+                        if (data.d === false && $('#PhysicalGV tr').length > 0) {
+                            $('#TransferPhysicalBtn').prop('disabled', false);
+                            console.log(data.d);
+                        }
+                        else {
+                            $('#TransferPhysicalBtn').prop('disabled', true);
+                            console.log(data.d);
+                        }
+                    },
+                    error: function (data, success, error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            function checkChemicalData() {
+
+                let searchTxtVal = $(`#SearchTxt`).val().trim();
+                let userMillCode = localStorage.getItem('userLocation');
+
+                $.ajax({
+                    type: "POST",
+                    url: 'WebService1.asmx/CheckIfDataExists',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({ FileNos: searchTxtVal, selectedSite: userMillCode, CheckMode: 1 }),
+                    success: function (data) {
+                        console.log(data.d);
+                        if (data.d === false && $('#ChemicalGV tr').length > 0) {
+                            $('#TransferChemicalBtn').prop('disabled', false);
+                        }
+                        else {
+                            $('#TransferChemicalBtn').prop('disabled', true);
+                        }
+                    },
+                    error: function (data, success, error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+        });
+    </script>
+</asp:Content>

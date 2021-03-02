@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="M4Transfer.Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>QA Test Result Data Transfer</title>
+    <script src="scripts/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/style/m4transfer_style.css" />
+</head>
+<body>
+    <div id="SiteHeader">
+        <img src="assets/sa_logo.png" id="SiteLogo" />
+        <h2>QA Test Result Data Transfer</h2>
+        <div class="site-divider">
+        </div>
+    </div>
+
+
+    <form id="form1" runat="server">
+        <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+    </form>
+    <asp:ContentPlaceHolder ID="ScriptPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>

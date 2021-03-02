@@ -4,42 +4,81 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
+using M4Transfer.Class;
 
 namespace M4Transfer
 {
     public partial class Default : System.Web.UI.Page
     {
-        private DBClass DBOperation = new DBClass();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack && Session["SelectedSite"] == null)
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+
+            if (Session["QCStaffUsername"] == null)
             {
-                InsertDataBtn.Enabled = false;
+                Response.Redirect("~/Login.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+                return;
             }
-            else
+
+            if (!IsPostBack && Session["QCStaffUsername"] != null)
             {
-                string SelectedSite = DropDownList1.SelectedValue.ToString().ToLower();
-                DBOperation.ShowData(SearchGV, SearchTxt.Text, LabelSqlError, SelectedSite);
-                Session.Clear();
+                LoadDropDownSelections();
+                SetPage();
             }
+        }
+
+        protected void SetPage()
+        {
+            LblUser.Text = Session["QCStaffUsername"].ToString();
+        }
+
+        protected void LoadDropDownSelections()
+        {
+            BindMillDropDown bindDDL = new BindMillDropDown(DropDownList1, LabelSqlError);
+            bindDDL.BindMillDropDownData();
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            if (DropDownList1.SelectedItem.Value.ToLower() != "m4")
-            {
-                InsertDataBtn.Enabled = true;
-            }
+            CheckData dataCheck = new CheckData();
+
+            ShowData PopulateGridView = new ShowData(LabelSqlError, PhysicalGV, ChemicalGV);
+            
+            string userMillCode = Session["MillCode"].ToString();
+            string selectedDdlValue = DropDownList1.SelectedValue.ToString();
+            string searchFileNum = SearchTxt.Text.Trim();
+
+            PopulateGridView.ShowPhysicalData(searchFileNum, selectedDdlValue);
+            PopulateGridView.ShowChemicalData(searchFileNum, selectedDdlValue);
         }
 
-        protected void InsertDataBtn_Click(object sender, EventArgs e)
+        protected void LinkButton1_Click(object sender, EventArgs e)
         {
-            string SelectedSite = DropDownList1.SelectedValue.ToString().ToLower();
-            DBOperation.InsertData(SearchGV, SelectedSite);
-            InsertDataBtn.Enabled = false;
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("~/Login.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
+            return;
         }
+
+        //protected void TransferPhysical_Click(object sender, EventArgs e)
+        //{
+        //    InsertData insertToDb = new InsertData(LabelSqlError, Session["MillCode"].ToString());
+
+        //    string FileNum = SearchTxt.Text.Trim();
+
+        //    insertToDb.TransferPhyiscalTestResult(FileNum);
+        //}
+
+        //protected void TransferChemical_Click(object sender, EventArgs e)
+        //{
+        //    InsertData insertToDb = new InsertData(LabelSqlError, Session["MillCode"].ToString());
+
+        //    string FileNum = SearchTxt.Text.Trim();
+
+        //    insertToDb.TransferMechanicalTestResult(FileNum);
+        //}
     }
 }

@@ -15,13 +15,22 @@ namespace M4Transfer
     {
 
         /// <summary>
-        /// form1 control.
+        /// LblUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Label LblUser;
+
+        /// <summary>
+        /// lbLogout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbLogout;
 
         /// <summary>
         /// SearchLabel control.
@@ -60,13 +69,22 @@ namespace M4Transfer
         protected global::System.Web.UI.WebControls.Button SearchButton;
 
         /// <summary>
-        /// SearchGV control.
+        /// PhysicalGV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView SearchGV;
+        protected global::System.Web.UI.WebControls.GridView PhysicalGV;
+
+        /// <summary>
+        /// ChemicalGV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView ChemicalGV;
 
         /// <summary>
         /// LabelSqlError control.
@@ -78,12 +96,12 @@ namespace M4Transfer
         protected global::System.Web.UI.WebControls.Label LabelSqlError;
 
         /// <summary>
-        /// InsertDataBtn control.
+        /// QueryResultLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertDataBtn;
+        protected global::System.Web.UI.WebControls.Label QueryResultLbl;
     }
 }

@@ -5,31 +5,36 @@ h2 {
     font-family: Verdana;
 }
 
-#SiteHeader {
+/*#SiteHeader {
     margin-top: 50px;
-}
+    margin-left: 100px;
+}*/
 
 #SiteLogo {
     width: 20%;
 }
 
-
-#SearchDiv {
+.LoginForm {
     margin-top: 20px;
-    padding-left: 100px;
-    padding-right: 100px;
-}
-
-#SearchGVDiv {
-    margin-top: 20px;
-    padding-left: 100px;
+    width: 30%;
+    border-style: solid;
+    padding-top: 30px;
+    padding-left: 10px;
+    padding-bottom: 30px;
 }
 
 .InsertDataBtn {
     margin-top: 10px;
 }
 
+.LabelSqlErrorDiv {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 100px;
+}
+
 .LblSqlError {
     color: red;
 }
+
 
